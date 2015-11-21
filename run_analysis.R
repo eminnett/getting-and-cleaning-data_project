@@ -43,13 +43,14 @@ features      <- tbl_df(data_features)
 # Into:
 #    Column.Label   Measurement   Operation   Constraint
 # 1  V1             tBodyAcc      mean        x
+new_feature_column_names <- c("Measurement", "Operation", "Constraint")
 features <- features %>%
-  extract(V2,
-    c("Measurement", "Operation", "Constraint"),
-    regex="([[:alnum:]]+)-([[:alnum:]]+)[:punct:]{2}-([[:alnum:]]+)",
-    remove = TRUE) %>%
-  mutate(V1=paste("V", V1, sep=''))
-colnames(features) <- c("Column.Label", "Measurement", "Operation", "Constraint")
+    extract(V2,
+        new_feature_column_names,
+        regex="([[:alnum:]]+)-([[:alnum:]]+)[:punct:]{2}-([[:alnum:]]+)",
+        remove = TRUE) %>%
+    mutate(V1=paste("V", V1, sep=''))
+colnames(features) <- c("Column.Label", new_feature_column_names)
 
 # Filter features that represent only mean and standard deviation operations.
 mean_std_features <- filter(features, Operation == "mean" | Operation == "std")
