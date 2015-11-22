@@ -86,5 +86,5 @@ tidy_data_by_activity_and_subject <- group_by(tidy_data, Activity.Labels, Subjec
 # Take the mean of each measurement in the tidy_data set grouped by subject and activity.
 summarised_tidy_data <- summarise_each(tidy_data_by_activity_and_subject, funs(mean))
 
-# Output the summarised data to the console.
-write.table(summarised_tidy_data, )
+# Output the summarised data to "summarised_tidy_data.txt".
+write.table(summarised_tidy_data, "summarised_tidy_data.txt", row.name=FALSE)
