@@ -45,7 +45,7 @@ The first two variables classify a single set of measurements made by the wearab
 - `Activity.Labels` The activity performed when the observation is made. One of: `LAYING, SITTING, STANDING, WALKING, WALKING_DOWNSTAIRS, WALKING_UPSTAIRS`
 - `Subject` The integer id of the subject for whom the measurement is made. The values range from 1 to 30.
 
-The remaining variables each represent the population mean of all measurements of the same variable grouped by `Activity.Labels` and `Subject`. These variables are defined by 4 pieces of information. Rather than duplicating description in a redundant fashion, I am option to describe these 4 pieces of information and their variations that when combined make up the all 48 variables.
+The remaining variables each represent the population mean of all measurements of the same variable grouped by `Activity.Labels` and `Subject`. These variables are defined by 4 pieces of information. Rather than duplicating descriptions in a redundant fashion, I am opting to describe these 4 pieces of information and their variations, that when combined, make up all 48 variables.
 
 Each variable is written in the form `tBodyAcc.mean.X` where the 4 components are as follows:
 
