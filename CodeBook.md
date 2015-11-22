@@ -40,7 +40,7 @@ Variables not shown: tBodyAcc.std.X (dbl), tBodyAcc.std.Y (dbl), tBodyAcc.std.Z
 ------
 ### Each Variable in more detail:
 
-The first two variables classify a single set of measurements made by the wearable device.
+The first two variables are used to classify a single set of measurements made by the wearable device.
 
 - `Activity.Labels` The activity performed when the observation is made. One of: `LAYING, SITTING, STANDING, WALKING, WALKING_DOWNSTAIRS, WALKING_UPSTAIRS`
 - `Subject` The integer id of the subject for whom the measurement is made. The values range from 1 to 30.
