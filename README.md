@@ -1,18 +1,44 @@
-The purpose of this project is to demonstrate your ability to collect, work with, and clean a data set. The goal is to prepare tidy data that can be used for later analysis. You will be graded by your peers on a series of yes/no questions related to the project. You will be required to submit: 1) a tidy data set as described below, 2) a link to a Github repository with your script for performing the analysis, and 3) a code book that describes the variables, the data, and any transformations or work that you performed to clean up the data called CodeBook.md. You should also include a README.md in the repo with your scripts. This repo explains how all of the scripts work and how they are connected.  
+# Summarising and tidying the UCI HAR dataset
+----
 
-One of the most exciting areas in all of data science right now is wearable computing - see for example this article . Companies like Fitbit, Nike, and Jawbone Up are racing to develop the most advanced algorithms to attract new users. The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained:
+This document walks through the script `run_analysis.R` that attempts to load, tidy and summarise the UCI HAR dataset described [here](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones) and that can be downloaded [here](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip).
 
-http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
+The script has is written based upon the following assumptions:
 
-Here are the data for the project:
+- The [dataset](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) has been downloaded and unzipped inside a folder called 'data' that is a sibling of the script within the filesystem.
+- The [dplyr](https://cran.r-project.org/web/packages/dplyr/index.html) package has been installed within the R workspace.
+- The [tidyr](https://cran.r-project.org/web/packages/tidyr/index.html) package has been installed within the R workspace.
 
-https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+The initial step within the script is to load each of the 6 datasets (train and test data for the subject, x, and y tables). The subject table contains data regarding the subject each observation relates to, the x table contains all of the summarise device measurements, and the y table contains an integer classification for each observation that relates to the activity performed by the subject when the observation is recorded. After loading each dataset, the data is then wrapped by dplyr data frames in order to allow processing and analysis with dplyr and tidyr.
 
- You should create one R script called run_analysis.R that does the following. 
-Merges the training and the test sets to create one data set.
-Extracts only the measurements on the mean and standard deviation for each measurement.
-Uses descriptive activity names to name the activities in the data set
-Appropriately labels the data set with descriptive variable names.
-From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+As we are only tidying the data and not explicitly performing any supervised machine learning algorithms on the data, we combine the training and test datasets into single data frames each for the subject, x and y tables.
 
-Good luck!
+We then load the feature labels from the original dataset. These act as human readable labels for each of the integer values found in the x table of measurements.
+
+In order to make it easier to execute select and filtering operations upon the feature labels, the script performs a series of operations to transform the table that initially looks like:
+
+```
+    V1                V2
+ 1   1 tBodyAcc-mean()-X
+```
+
+And turn it into this:
+
+```
+    Column.Label   Measurement   Operation   Constraint
+ 1  V1             tBodyAcc      mean        x
+```
+
+The brief requests that the output summarised and tidy dataset only contains variables related to means and standard deviations. The next part of the script filters the features to meet this requirement.
+
+Now that we have the filtered features, we select only the variables in the x table of measurements that match the filtered features.
+
+By default the tables have loaded with generic variable names `V1` and so on. We now have enough information to replace these generic labels with more meaningful values. The next step in the script sets the labels with ones that match the pattern `tBodyAcc.mean.X`. In order to maintain the ability to map the features back to the column labels, the script updates features mapping with the new column label associated with each feature.
+
+The next set of steps processes the y table of activity labels and subjects table to bind the human readable activity labels with the integer values as well as assigning more meaningful column labels to each of these two tables.
+
+Now that we have meaningful data in each of the x, y and subjects tables, it is time to bind the columns of each of these into a single new table. The tidy dataset is starting to take shape.
+
+The last data processing step is to compress the individual measurements and replace them with population means for each group of measurements. In order to accomplish this, the script first groups the data by activity and by subject. The script is then able to run a groupwise mean function call on each group of measurements. This last set of operations yields the summarised, tidy dataset as described in the brief.
+
+The last step in the script exports the summarised, tidy dataset to `summarised_tidy_data.txt`.
