@@ -42,7 +42,7 @@ features      <- tbl_df(data_features)
 # 1   1 tBodyAcc-mean()-X
 # Into:
 #    Column.Label   Measurement   Operation   Constraint
-# 1  V1             tBodyAcc      mean        x
+# 1  V1             tBodyAcc      mean        X
 new_feature_column_names <- c("Measurement", "Operation", "Constraint")
 features <- features %>%
     extract(V2,

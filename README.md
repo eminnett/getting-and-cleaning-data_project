@@ -26,7 +26,7 @@ And turn it into this:
 
 ```
     Column.Label   Measurement   Operation   Constraint
- 1  V1             tBodyAcc      mean        x
+ 1  V1             tBodyAcc      mean        X
 ```
 
 The brief requests that the output summarised and tidy dataset only contains variables related to means and standard deviations. The next part of the script filters the features to meet this requirement.
